@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name" translatable="false">StoryApp</string>
+    <string name="signup">Daftar</string>
+    <string name="login">Masuk</string>
+    <string name="title_signup_page">Lengkapi data dirimu di bawah ini ya</string>
+    <string name="email" translatable="false">Email</string>
+    <string name="password" translatable="false">Password</string>
+    <string name="message_login_page">Masukkan dulu datamu ya</string>
+    <string name="name">Nama</string>
+    <string name="logout">Keluar</string>
+    <string name="helper_text">Password minimal memiliki 8 karakter</string>
+    <string name="user" translatable="false">Alvano Hastagina</string>
+    <string name="text_btn_camera">Kamera</string>
+    <string name="text_btn_gallery">Galeri</string>
+    <string name="ed_description_hint">Masukan deskripsi..</string>
+    <string name="text_btn_upload">Unggah</string>
+    <string name="tv_description">Deskripsi</string>
+    <string name="nav_title_logout">Keluar</string>
+    <string name="nav_title_setting">Ubah bahasa</string>
+    <string name="tv_signup">Belum punya akun? Daftar</string>
+    <string name="tv_signin">Sudah punya akun? Masuk</string>
+    <string name="redirect_link"> disini.</string>
+    <string name="tv_description_value" translatable="false">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</string>
+
+</resources>

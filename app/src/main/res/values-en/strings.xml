@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StoryApp</string>
+    <string name="signup">Register</string>
+    <string name="login">Login</string>
+    <string name="title_signup_page">Complete your data below here</string>
+    <string name="message_login_page">Put your data first</string>
+    <string name="name">Name</string>
+    <string name="logout">Logout</string>
+    <string name="helper_text">Minimum Password is 8 character</string>
+    <string name="text_btn_camera">Camera</string>
+    <string name="text_btn_gallery">Gallery</string>
+    <string name="ed_description_hint">Write description..</string>
+    <string name="text_btn_upload">Upload</string>
+    <string name="tv_description">Description</string>
+    <string name="nav_title_logout">Logout</string>
+    <string name="nav_title_setting">Change language</string>
+    <string name="tv_signup">Don\'t have an account? Register</string>
+    <string name="tv_signin">Already have an account? Login</string>
+    <string name="redirect_link">here.</string>
+</resources>
