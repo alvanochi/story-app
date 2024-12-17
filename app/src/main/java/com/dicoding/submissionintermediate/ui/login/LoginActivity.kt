@@ -15,9 +15,10 @@ import com.dicoding.submissionintermediate.ui.register.RegisterActivity
 
 
 class LoginActivity : AppCompatActivity() {
-    private val loginViewModel by viewModels<LoginViewModel> {
+    private val loginViewModel: LoginViewModel by viewModels {
         ViewModelFactory.getInstance(this)
     }
+
     private lateinit var binding: ActivityLoginBinding
 
 
@@ -115,6 +116,15 @@ class LoginActivity : AppCompatActivity() {
             playSequentially(tvMessage, tvEmail, etEmail, tvPassword, etPassword, login, register)
             startDelay = 100
             start()
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        loginViewModel.authToken.observe(this){ token ->
+            if(token.isNotEmpty()){
+                moveActivity()
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-package com.dicoding.submissionintermediate.data.retrofit.response
+package com.dicoding.submissionintermediate.data.response
 
 import com.google.gson.annotations.SerializedName
 

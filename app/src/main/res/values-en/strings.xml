@@ -18,4 +18,9 @@
     <string name="tv_signup">Don\'t have an account? Register</string>
     <string name="tv_signin">Already have an account? Login</string>
     <string name="redirect_link">here.</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="nav_title_map">Map</string>
+    <string name="retry">Try again</string>
+    <string name="text_checkbox_location">Upload current location</string>
+
 </resources>

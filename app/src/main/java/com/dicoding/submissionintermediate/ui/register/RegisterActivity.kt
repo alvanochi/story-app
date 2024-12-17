@@ -10,7 +10,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.dicoding.submissionintermediate.databinding.ActivityRegisterBinding
 import com.dicoding.submissionintermediate.ui.login.LoginActivity
-import java.lang.ref.WeakReference
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -76,7 +75,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun showErrorDialog(message: String) {
         AlertDialog.Builder(this).apply {
-            setTitle("Kesalahan")
+            setTitle("Oops!")
             setMessage(message)
             setPositiveButton("OK", null)
             create()

@@ -1,4 +1,4 @@
-package com.dicoding.submissionintermediate.ui.detail
+package com.dicoding.submissionintermediate.ui.maps
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -7,39 +7,35 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.dicoding.submissionintermediate.data.AuthRepository
-import com.dicoding.submissionintermediate.data.response.Story
+import com.dicoding.submissionintermediate.data.response.ListStoryItem
 import com.dicoding.submissionintermediate.data.retrofit.ApiConfig
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
-import java.net.SocketTimeoutException
 
-class DetailViewModel(private val repository: AuthRepository): ViewModel() {
-    private val _story = MutableLiveData<Story>()
-    val story: LiveData<Story> = _story
+class MapsViewModel(private val repository: AuthRepository): ViewModel() {
+
+    private val _storiesWithLocation = MutableLiveData<List<ListStoryItem>>()
+    val storiesWithLocation: LiveData<List<ListStoryItem>> = _storiesWithLocation
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
+
 
     val authToken: LiveData<String> = repository.getSession().asLiveData()
 
 
-
-    fun getStory(id: String){
+    fun getStoriesWithLocation(){
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                val response = ApiConfig.getApiService().getDetailStory("Bearer ${authToken.value!!}", id)
+                val response = ApiConfig.getApiService().getStoriesWithLocation("Bearer ${authToken.value!!}")
                 _isLoading.value = false
 
-                _story.value = response.story!!
+                _storiesWithLocation.value = response.listStory
 
-            }
-            catch (e: SocketTimeoutException) {
-                Log.e("API_ERROR", "Request timed out!")
             }
             catch (e: HttpException){
                 _isLoading.value = false
-                Log.e("catch", e.message.toString() )
-
+                Log.e("getStoriesWithLocation", e.message.toString())
             }
         }
 

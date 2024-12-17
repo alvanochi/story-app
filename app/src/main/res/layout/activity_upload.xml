@@ -94,7 +94,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_add"
+        app:layout_constraintBottom_toTopOf="@id/cb_location"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -110,6 +110,18 @@
             android:overScrollMode="ifContentScrolls"
             android:inputType="textMultiLine" />
     </com.google.android.material.textfield.TextInputLayout>
+
+
+    <CheckBox
+        android:id="@+id/cb_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/button_add"
+        android:text="@string/text_checkbox_location" />
 
 
     <Button

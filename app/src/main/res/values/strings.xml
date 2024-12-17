@@ -21,5 +21,9 @@
     <string name="tv_signin">Sudah punya akun? Masuk</string>
     <string name="redirect_link"> disini.</string>
     <string name="tv_description_value" translatable="false">Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="nav_title_map">Map</string>
+    <string name="retry">Coba lagi</string>
+    <string name="text_checkbox_location">Unggah lokasi saat ini</string>
 
 </resources>

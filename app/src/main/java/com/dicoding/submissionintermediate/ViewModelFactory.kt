@@ -4,30 +4,33 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.submissionintermediate.data.AuthRepository
-import com.dicoding.submissionintermediate.data.pref.UserPreference
-import com.dicoding.submissionintermediate.data.pref.dataStore
+import com.dicoding.submissionintermediate.data.StoryRepository
 import com.dicoding.submissionintermediate.di.Injection
 import com.dicoding.submissionintermediate.ui.detail.DetailViewModel
 import com.dicoding.submissionintermediate.ui.login.LoginViewModel
 import com.dicoding.submissionintermediate.ui.main.MainViewModel
+import com.dicoding.submissionintermediate.ui.maps.MapsViewModel
 import com.dicoding.submissionintermediate.ui.upload.UploadViewModel
 
-class ViewModelFactory(private val repository: AuthRepository) : ViewModelProvider.NewInstanceFactory() {
+class ViewModelFactory(private val authRepository: AuthRepository, private val storyRepository: StoryRepository) : ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-                MainViewModel(repository) as T
+                MainViewModel(authRepository, storyRepository) as T
             }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-                LoginViewModel(repository) as T
+                LoginViewModel(authRepository) as T
             }
             modelClass.isAssignableFrom(DetailViewModel::class.java) -> {
-                DetailViewModel(repository) as T
+                DetailViewModel(authRepository) as T
             }
             modelClass.isAssignableFrom(UploadViewModel::class.java) -> {
-                UploadViewModel(repository) as T
+                UploadViewModel(authRepository) as T
+            }
+            modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
+                MapsViewModel(authRepository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
@@ -41,7 +44,7 @@ class ViewModelFactory(private val repository: AuthRepository) : ViewModelProvid
         fun getInstance(context: Context): ViewModelFactory {
             if (INSTANCE == null) {
                 synchronized(ViewModelFactory::class.java) {
-                    INSTANCE = ViewModelFactory(Injection.provideAuthRepository(context))
+                    INSTANCE = ViewModelFactory(Injection.provideAuthRepository(context), Injection.provideStoryRepository(context))
                 }
             }
             return INSTANCE as ViewModelFactory

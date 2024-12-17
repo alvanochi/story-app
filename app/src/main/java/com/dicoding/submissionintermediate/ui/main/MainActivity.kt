@@ -9,17 +9,22 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.submissionintermediate.R
 import com.dicoding.submissionintermediate.ViewModelFactory
-import com.dicoding.submissionintermediate.data.retrofit.response.ListStoryItem
+import com.dicoding.submissionintermediate.data.paging.LoadingStateAdapter
 import com.dicoding.submissionintermediate.databinding.ActivityMainBinding
 import com.dicoding.submissionintermediate.ui.login.LoginActivity
+import com.dicoding.submissionintermediate.ui.maps.MapsActivity
 import com.dicoding.submissionintermediate.ui.upload.UploadActivity
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var adapter: StoriesAdapter
+
     private val mainViewModel by viewModels<MainViewModel> {
         ViewModelFactory.getInstance(this)
     }
@@ -28,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         val toolbar: Toolbar = binding.toolbar
         setSupportActionBar(toolbar)
@@ -38,13 +44,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        mainViewModel.isLoading.observe(this){
-            showLoading(it)
-        }
-
         mainViewModel.authToken.observe(this) { authToken ->
             if (!authToken.isNullOrEmpty()) {
-                mainViewModel.getStories()
+                showStories(authToken)
             } else {
                 val intent = Intent(this@MainActivity, LoginActivity::class.java)
                 startActivity(intent)
@@ -52,26 +54,30 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        mainViewModel.stories.observe(this){
-            showStories(it)
+
+    }
+
+    private fun showStories(token: String) {
+        adapter = StoriesAdapter()
+        binding.rvStory.layoutManager = LinearLayoutManager(this)
+
+        adapter.addLoadStateListener { loadState ->
+            val isLoading = loadState.refresh is LoadState.Loading
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+
         }
 
+        binding.rvStory.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                adapter.retry()
+            }
+        )
 
-    }
-
-    private fun showStories(stories: List<ListStoryItem>) {
-        if (stories.isNotEmpty()) {
-            val adapter = StoriesAdapter()
-            adapter.submitList(stories)
-            binding.rvStory.adapter = adapter
-            binding.rvStory.layoutManager = LinearLayoutManager(this)
+        mainViewModel.getStory(token).observe(this){
+            if(it != null) binding.progressBar.visibility = View.VISIBLE else binding.progressBar.visibility = View.GONE
+            adapter.submitData(lifecycle, it)
         }
     }
-
-    private fun showLoading(isLoading: Boolean){
-        if(isLoading) binding.progressBar.visibility = View.VISIBLE else binding.progressBar.visibility = View.GONE
-    }
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_nav, menu)
@@ -88,20 +94,11 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(Settings.ACTION_LOCALE_SETTINGS))
                 true
             }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onResume(){
-        super.onResume()
-        mainViewModel.authToken.observe(this) { authToken ->
-            if (!authToken.isNullOrEmpty()) {
-                mainViewModel.getStories()
-            } else {
-                val intent = Intent(this@MainActivity, LoginActivity::class.java)
-                startActivity(intent)
-                finish()
+            R.id.action_map -> {
+                startActivity(Intent(this, MapsActivity::class.java))
+                true
             }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }

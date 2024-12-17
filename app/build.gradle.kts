@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
+    id("com.google.devtools.ksp")
+
 }
 
 android {
@@ -14,6 +17,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        buildConfigField("String","BASE_URL", "\"https://story-api.dicoding.dev/v1/\"" )
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -41,22 +45,42 @@ android {
 
 dependencies {
 
-    //glide
+    androidTestImplementation(libs.mockwebserver)
+    androidTestImplementation(libs.okhttp3.okhttp.tls)
+
+    androidTestImplementation(libs.espresso.intents)
+
+    implementation(libs.androidx.espresso.idling.resource)
+
+
+    implementation(libs.play.services.location)
+
+
+    androidTestImplementation(libs.androidx.core.testing)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
+
+    testImplementation(libs.androidx.core.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.inline)
+
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.room.compiler)
+
+    implementation(libs.androidx.room.paging)
+
+    implementation(libs.androidx.paging.runtime.ktx)
+
     implementation(libs.glide)
 
-
-    //dataStore
     implementation(libs.androidx.datastore.preferences)
 
-    //coroutine
     implementation(libs.kotlinx.coroutines.android)
 
-    //retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
 
-    //lifeCycle viewModel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
 
@@ -65,6 +89,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

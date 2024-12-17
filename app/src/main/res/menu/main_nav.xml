@@ -12,4 +12,11 @@
         android:title="@string/nav_title_logout"
         android:icon="@drawable/ic_baseline_logout_24"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_map"
+        android:title="@string/nav_title_map"
+        android:icon="@drawable/ic_map"
+        app:showAsAction="ifRoom"
+        />
 </menu>

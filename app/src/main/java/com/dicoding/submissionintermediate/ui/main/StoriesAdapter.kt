@@ -2,21 +2,22 @@ package com.dicoding.submissionintermediate.ui.main
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.dicoding.submissionintermediate.data.retrofit.response.ListStoryItem
+import com.dicoding.submissionintermediate.data.response.ListStoryItem
 import com.dicoding.submissionintermediate.databinding.ItemStoryBinding
 import com.dicoding.submissionintermediate.ui.detail.DetailActivity
 import com.dicoding.submissionintermediate.ui.detail.DetailActivity.Companion.ID_STORY
 
 
-class StoriesAdapter: ListAdapter<ListStoryItem, StoriesAdapter.MyViewHolder>(
+class StoriesAdapter: PagingDataAdapter<ListStoryItem, StoriesAdapter.MyViewHolder>(
     DIFF_CALLBACK
 ) {
     inner class MyViewHolder(private val binding: ItemStoryBinding): RecyclerView.ViewHolder(binding.root){
@@ -48,7 +49,11 @@ class StoriesAdapter: ListAdapter<ListStoryItem, StoriesAdapter.MyViewHolder>(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val itemStory = getItem(position)
-        holder.bind(itemStory)
+        if (itemStory != null) {
+            holder.bind(itemStory)
+        } else {
+            Log.d("itemStoryAdapter", "itemStory is null at position $position")
+        }
     }
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<ListStoryItem>() {
@@ -56,7 +61,7 @@ class StoriesAdapter: ListAdapter<ListStoryItem, StoriesAdapter.MyViewHolder>(
                 return oldItem == newItem
             }
             override fun areContentsTheSame(oldItem: ListStoryItem, newItem: ListStoryItem): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
         }
     }
